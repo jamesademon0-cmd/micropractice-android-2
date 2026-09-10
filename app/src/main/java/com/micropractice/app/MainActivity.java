@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.*;
 import java.util.Locale;
 
@@ -16,7 +15,8 @@ public class MainActivity extends Activity {
     TextView tv(String s,float size,int color){ TextView v=new TextView(this); v.setText(s); v.setTextSize(size); v.setTextColor(color); v.setGravity(Gravity.CENTER_VERTICAL); return v; }
     Button btn(String s){ Button b=new Button(this); b.setText(s); b.setTextSize(15); b.setAllCaps(false); b.setTextColor(Color.WHITE); b.setBackgroundColor(blue); b.setPadding(dp(18),0,dp(18),0); return b; }
     TextView title(String s){ TextView v=tv(s,28,text); v.setTypeface(Typeface.DEFAULT,Typeface.BOLD); v.setPadding(dp(20),dp(22),dp(20),dp(8)); return v; }
-    TextView cardText(String s){ TextView v=tv(s,16,text); v.setPadding(dp(18),dp(16),dp(18),dp(16)); v.setBackgroundColor(Color.WHITE); return v; }
+    TextView cardText(String s){ return cardText(s,16,text); }
+    TextView cardText(String s,float size,int color){ TextView v=tv(s,size,color); v.setPadding(dp(18),dp(16),dp(18),dp(16)); v.setBackgroundColor(Color.WHITE); return v; }
     @Override public void onCreate(Bundle b){super.onCreate(b); prefs=getSharedPreferences("micro",0); showHome();}
     void base(){ root=new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL); root.setBackgroundColor(bg); setContentView(root); content=new LinearLayout(this); content.setOrientation(LinearLayout.VERTICAL); root.addView(content,new LinearLayout.LayoutParams(-1,0,1)); nav=new LinearLayout(this); nav.setGravity(Gravity.CENTER); nav.setBackgroundColor(Color.WHITE); root.addView(nav,new LinearLayout.LayoutParams(-1,dp(68))); String[] ns={"首页","练习","成长","我的"}; for(String n:ns){TextView x=tv(n,13,muted); x.setGravity(Gravity.CENTER); nav.addView(x,new LinearLayout.LayoutParams(0,-1,1)); if(n.equals("首页"))x.setTextColor(blue); x.setOnClickListener(v->{ if(n.equals("首页"))showHome(); else if(n.equals("练习"))showPractice(); else if(n.equals("成长"))showGrowth(); else showMe(); });}}
     void showHome(){base(); content.addView(title("微练")); TextView sub=tv("先让你开始，再帮你变强。",15,muted); sub.setPadding(dp(20),0,dp(20),dp(18)); content.addView(sub); TextView streak=cardText("今日状态\n\n最小承诺：写一句英文\n预计只需 1 分钟\n\n完成最小动作，就是今天的成功。",16,text); LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,dp(180)); cp.setMargins(dp(16),0,dp(16),dp(14)); content.addView(streak,cp); Button go=btn("开始今天的微练"); LinearLayout.LayoutParams bp=new LinearLayout.LayoutParams(-1,dp(54)); bp.setMargins(dp(20),dp(6),dp(20),0); content.addView(go,bp); go.setOnClickListener(v->minimumAction()); TextView tip=tv("不追求连续打卡，只追求真正进步。",14,muted); tip.setGravity(Gravity.CENTER); content.addView(tip,new LinearLayout.LayoutParams(-1,dp(60))); }
