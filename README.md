@@ -1,5 +1,5 @@
-# 微练（MicroPractice）
+# Android Toolbox
 
-先让你开始，再帮你变强。
+Cloud build test for the Android Toolbox project.
 
-Android MVP 正在构建中。
+The APK is built by GitHub Actions on pushes to main.
